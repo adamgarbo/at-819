@@ -296,14 +296,12 @@ gl.xformatter = LONGITUDE_FORMATTER
 gl.yformatter = LATITUDE_FORMATTER
 gl.xlabel_style = {'size': 9, 'rotation': 0}
 gl.ylabel_style = {'size': 9, 'rotation': 0}
-gl.xlocator = mticker.FixedLocator(range(-70, -30, 2))
-gl.ylocator = mticker.FixedLocator(range(65, 78, 1))
-
-# Move labels outside the map frame
 gl.top_labels = False
 gl.right_labels = False
 gl.bottom_labels = True
 gl.left_labels = True
+gl.xlocator = mticker.FixedLocator(range(-70, -30, 2))
+gl.ylocator = mticker.FixedLocator(range(65, 78, 1))
 
 # Plot AIS by vessel type
 vessel_types = df_nwp['astd_cat'].dropna().unique()
@@ -317,19 +315,37 @@ for vessel_type, color in zip(vessel_types, colors):
         color=color, transform=ccrs.PlateCarree()
     )
 
-# Legend outside
+# Legend outside plot
 ax.legend(
     title="Vessel Type", title_fontsize=9, fontsize=8,
     loc='center left', bbox_to_anchor=(1.02, 0.5), frameon=True
 )
 
-# Title
-plt.title("AIS Positions by Vessel Type", fontsize=13)
+# Add major communities (lon, lat, name)
+greenland_communities = [
+    ("Upernavik",    -56.147222,72.786944),
+    ("Sisimiut",     -53.6735, 66.9395),
+    ("Ilulissat",    -51.1000, 69.2167),
+    ("Aasiaat",      -52.8694, 68.7098),
+    ("Uummannaq",    -52.1167, 70.6761),
+]
 
+# Plot community markers and labels
+for name, lon, lat in greenland_communities:
+    ax.plot(lon, lat, marker='o', color='red', markersize=3,
+            transform=ccrs.PlateCarree(), zorder=5)
+    ax.text(
+        lon + 0.2, lat, name,
+        fontsize=7, ha='left', va='center', color='black',
+        transform=ccrs.PlateCarree(), zorder=5,
+        bbox=dict(facecolor='white', edgecolor='none', boxstyle='round,pad=0.2', alpha=0.8)
+    )
+
+# Title and save
+#plt.title("AIS Positions by Vessel Type", fontsize=13)
 plt.tight_layout()
-plt.savefig("/Users/adamgarbo/Downloads/west_greenland_by_type_outside_legend.png", dpi=300, bbox_inches='tight')
+plt.savefig("/Users/adamgarbo/Downloads/west_greenland_by_type_with_communities.png", dpi=300, bbox_inches='tight')
 plt.show()
-
 
 # -----------------------------------------------------------------------------
 # Plot AIS data near Greenland by Ice Class
