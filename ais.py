@@ -180,6 +180,45 @@ plt.show()
 
 
 # -----------------------------------------------------------------------------
+# Plot ship size group
+# -----------------------------------------------------------------------------
+
+# Ensure df_nwp is safe to modify
+df_nwp = df_nwp.copy()
+
+# Clean sizegroup_gt strings
+df_nwp['sizegroup_gt'] = df_nwp['sizegroup_gt'].str.replace(r'\s*GT$', '', regex=True)
+
+# Define custom order
+size_order = [
+    '10000 - 24999',
+    '5000 - 9999',
+    '1000 - 4999',
+    '< 1000'
+]
+
+# Convert to ordered categorical
+df_nwp['sizegroup_gt'] = pd.Categorical(df_nwp['sizegroup_gt'], categories=size_order, ordered=True)
+
+# Count unique ship IDs per size group
+unique_ships = df_nwp.drop_duplicates(subset=['shipid', 'sizegroup_gt'])
+size_counts = unique_ships['sizegroup_gt'].value_counts().reindex(size_order)
+
+# Plot
+fig, ax = plt.subplots(figsize=(6, 4))
+size_counts.plot(kind='barh', color='steelblue', edgecolor='black', ax=ax)
+
+ax.set_xlabel("Number of Unique Vessels")
+ax.set_ylabel("Ship Size Group (GT)")
+ax.set_title("Unique Vessels per Ship Size Group", fontsize=14)
+ax.xaxis.get_major_locator().set_params(integer=True)
+
+plt.tight_layout()
+plt.savefig('/Users/adamgarbo/Downloads/ship_sizegroup_ordered.png', dpi=300, bbox_inches='tight')
+plt.show()
+
+
+# -----------------------------------------------------------------------------
 # Estimated ship speed
 # -----------------------------------------------------------------------------
 
