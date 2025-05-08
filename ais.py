@@ -1,9 +1,51 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Created on Wed May  7 17:23:02 2025
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-@author: adamgarbo
+"""
+AIS Data Plotting Toolkit
+
+Generates summary visualisations from AIS (Automatic Identification System) datasets, 
+including emissions, discharges, vessel types, flag states, and spatial activity. 
+This script supports exploratory data analysis and figure creation for Arctic maritime 
+traffic, environmental assessments, and operational planning.
+
+Features:
+    - Horizontal bar plots of emissions and discharges by vessel type
+    - Flag state and ice class distribution charts
+    - High-resolution heat maps of AIS positions
+    - Clean, consistent output for publication or reporting
+
+Usage:
+    Import the plotting functions into your script or notebook, or run them standalone.
+
+Parameters:
+    - df (pandas.DataFrame): AIS data containing emissions, classifications, and geolocation.
+    - variables (list): Emission or discharge variables to plot.
+    - group_col (str): Grouping column (e.g., 'astd_cat' or 'flagname').
+    - output_dir (str): Directory where output plots will be saved.
+
+Requirements:
+    - Python 3.x
+    - pandas
+    - matplotlib
+
+Author:
+    Adam Garbo
+
+Created:
+    2025-05-06
+
+Last Updated:
+    2025-05-06
+
+Repository:
+    https://github.com/adamgarbo/at-819
+
+License:
+    MIT License
+
 """
 import pandas as pd
 import matplotlib.pyplot as plt
