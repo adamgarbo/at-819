@@ -180,25 +180,6 @@ plt.show()
 
 
 # -----------------------------------------------------------------------------
-# Plot CO2 by types
-# -----------------------------------------------------------------------------
-
-co2_by_type = df_nwp.groupby('astd_cat')['co2'].sum().sort_values()
-
-fig, ax = plt.subplots(figsize=(6, 4))
-co2_by_type.plot(kind='barh', color='darkgreen', edgecolor='black', ax=ax)
-
-ax.set_xlabel("Total CO₂ Emissions (kg)")
-ax.set_ylabel("Vessel Type")
-ax.set_title("Total CO₂ Emissions by Vessel Type", fontsize=14)
-ax.xaxis.get_major_locator().set_params(integer=True)
-
-plt.tight_layout()
-plt.savefig("/Users/adamgarbo/Downloads/co2_by_vessel_type.png", dpi=300, bbox_inches='tight')
-plt.show()
-
-
-# -----------------------------------------------------------------------------
 # Estimated ship speed
 # -----------------------------------------------------------------------------
 
@@ -312,7 +293,7 @@ plt.show()
 
 
 # -----------------------------------------------------------------------------
-# Plot AIS data near Greenland by Vessel Type
+# Plot AIS data near Greenland by Ice Class
 # -----------------------------------------------------------------------------
 
 # Count unique ships per ice class (excluding missing)
